@@ -37,6 +37,7 @@ class Weather {
 }
 
 class WeatherService {
+  //
   private async fetchLocationData(city: string): Promise<any> {
     const targetURL = `${process.env.API_BASE_URL}/geo/1.0/direct?q=${city}&limit=1&appid=${process.env.API_KEY}`;
     const response = await fetch(targetURL);
@@ -49,10 +50,7 @@ class WeatherService {
     return { lat, lon };
   }
 
-  // // TODO: Create buildGeocodeQuery method
-  // private buildGeocodeQuery(city: string): string {
-  //   return `${process.env.API_BASE_URL}/geo/1.0/direct?q=${city}&limit=1&appid=${process.env.API_KEY}`;
-  // }
+  
 
   private buildWeatherQuery(coordinates: Coordinates): string {
     return `${process.env.API_BASE_URL}/data/2.5/forecast?lat=${coordinates.lat}&lon=${coordinates.lon}&units=imperial&appid=${process.env.API_KEY}`;
@@ -81,15 +79,21 @@ class WeatherService {
 
   private buildForecastArray(
     currentWeather: Weather[],
-    weatherData: any
+    weatherData: any 
   ): Weather[] {
-    const weatherArray = [
-      weatherData.list[0],
-      weatherData.list[8],
-      weatherData.list[16],
-      weatherData.list[24],
-      weatherData.list[32],
-    ];
+    const weatherArray = weatherData.list.filter((data: any) => {
+      return data.dt_txt.includes("15:00:00");
+    });
+
+    console.log(weatherArray);
+
+    // const weatherArray = [
+    //   weatherData.list[0],
+    //   weatherData.list[8],
+    //   weatherData.list[16],
+    //   weatherData.list[24],
+    //   weatherData.list[32],
+    // ];
 
     return weatherArray.map((weather: any) => {
       return new Weather(
