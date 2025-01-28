@@ -10,5 +10,9 @@
     {
         "name": "New York",
         "id": "e1d8c53f-977d-479a-9157-48ba627d791c"
+    },
+    {
+        "name": "Denver",
+        "id": "e70f12a4-fc73-4a6a-947e-9aca9e022788"
     }
 ]
